@@ -1003,42 +1003,35 @@
 													<p role="status" aria-live="polite" aria-atomic="true"></p>
 													<ul></ul>
 												</div>
-												<form action="/#wpcf7-f387-p565-o1" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
-													<div style="display: none;">
-														<input type="hidden" name="_wpcf7" value="387" />
-														<input type="hidden" name="_wpcf7_version" value="5.5.6" />
-														<input type="hidden" name="_wpcf7_locale" value="en_US" />
-														<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f387-p565-o1" />
-														<input type="hidden" name="_wpcf7_container_post" value="565" />
-														<input type="hidden" name="_wpcf7_posted_data_hash" value="" />
-													</div>
+												<form id="EmailCallBack" method="post" class="wpcf7-form init" novalidate="novalidate" data-status="init">
+													{% csrf_token %}
 													<div class="comment-form text-left">
 														<div class="form-results"></div>
 														<div class="input-field">
 															<span class="wpcf7-form-control-wrap your-name">
-																<input type="text" name="your-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required input-line" aria-required="true" aria-invalid="false" />
+																<input type="text" name="callback-name" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required input-line" aria-required="true" aria-invalid="false"/>
 															</span>
 															<label class="input-title">Your Name</label>
 														</div>
 														<div class="input-field">
 															<span class="wpcf7-form-control-wrap mobile-number">
-																<input type="tel" name="mobile-number" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel input-line" aria-required="true" aria-invalid="false" />
+																<input type="tel" name="callback-mobile-number" value="" size="40" class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel input-line" aria-required="true" aria-invalid="false" />
 															</span>
 															<label class="input-title">Mobile Number</label>
 														</div>
 														<div class="input-field">
 															<p>
 																<span class="wpcf7-form-control-wrap date-116">
-																	<input type="date" name="date-116" value="" class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date input-line" aria-invalid="false" />
+																	<input type="date" name="callback-date" value="" class="wpcf7-form-control wpcf7-date wpcf7-validates-as-date input-line" aria-invalid="false" />
 																</span>
 																<label class="input-title">Choose Date</label>
 														</div>
-														<div class="input-field">
-															<button type="submit" class="btn">Call Me Back</button>
-														</div>
 													</div>
-													<div class="wpcf7-response-output" aria-hidden="true"></div>
 												</form>
+												<div class="input-field">
+													<button onclick="SubmitCallBack();" class="btn">Call Me Back</button>
+													<div class="response-output" aria-hidden="true"></div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -1198,7 +1191,7 @@ var wpcf7 = {"api":{"root":"https:\/\/vikingassetmanagement.com\/wp-json\/","nam
 <link rel='stylesheet' id='vc_tta_style-css' href="{% static 'css/js_composer_tta.min.css' %}?ver=6.8.0" type='text/css' media='all' />
 <script type='text/javascript' src="{% static 'js/regenerator-runtime.min.js' %}?ver=0.13.9" id='regenerator-runtime-js'></script>
 <script type='text/javascript' src="{% static 'js/wp-polyfill.min.js' %}?ver=3.15.0" id='wp-polyfill-js'></script>
-<script type='text/javascript' src="{% static 'js/index.js' %}?ver=5.5.6" id='contact-form-7-js'></script>
+<!-- <script type='text/javascript' src="{% static 'js/index.js' %}?ver=5.5.6" id='contact-form-7-js'></script> -->
 <script type='text/javascript' src="{% static 'js/comment-reply.min.js' %}?ver=6.1.1" id='comment-reply-js'></script>
 <script type='text/javascript' src="{% static 'js/bootstrap.min.js' %}?ver=6.1.1" id='bootstrap-js'></script>
 <script type='text/javascript' src="{% static 'js/jquery.easing.min.js' %}?ver=6.1.1" id='easing-js'></script>
@@ -1214,5 +1207,42 @@ var wpcf7 = {"api":{"root":"https:\/\/vikingassetmanagement.com\/wp-json\/","nam
 <script type='text/javascript' src="{% static 'js/vc-tta-autoplay.min.js' %}?ver=6.8.0" id='vc_tta_autoplay_script-js'></script>
 <script type='text/javascript' src="{% static 'js/vc-tabs.min.js' %}?ver=6.8.0" id='vc_tabs_script-js'></script>
 <script type='text/javascript' defer src="{% static 'js/forms.js' %}?ver=4.8.6" id='mc4wp-forms-api-js'></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function SubmitCallBack(){
+		$(".response-output").empty();
+
+		var callback_name = $("input[name='callback-name']").val();
+		if (callback_name == ""){
+			$(".response-output").append("Name should not be empty!");
+			return false;
+		}
+
+		var callback_mobile_number = $("input[name='callback-mobile-number']").val();
+		if (callback_mobile_number == ""){
+			$(".response-output").append("Mobile number should not be empty!");
+			return false;
+		}
+		var callback_date = $("input[name='callback-date']").val();
+		if (callback_date == ""){
+			$(".response-output").append("Date should not be empty!");
+			return false;
+		}
+		EmailCallBackArray = $("#EmailCallBack").serializeArray();
+		
+		$.ajax({
+	        type: "POST",
+	        url: "{% url 'EmailCallBack' %}",
+	        data: EmailCallBackArray,
+	        async:true,
+	        success: function (data) {
+	            $(".response-output").append("Email Sent!");
+	        },
+	        error: function (e) {
+	            $(".response-output").append("Error!");
+	        }
+	    })
+	}
+</script>
 </body>
 </html>

@@ -20,4 +20,5 @@ from . import views as VikingAssetManagementViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", VikingAssetManagementViews.landingpage, name="LandingPage"),
+    path('EmailCallBack', VikingAssetManagementViews.EmailCallBack, name="EmailCallBack"),
 ]
