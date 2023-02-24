@@ -14,7 +14,7 @@ def EmailCallBack(request):
 	message = callback_name+' want us to call them thru his/her number '+callback_mobile_number+" on this date "+callback_date
 	from_email = 'william.crumb@vikingassetmanagement.com'
 	try:
-		send_mail(subject, message, from_email, ['poliamcrumb@gmail.com'])
+		send_mail(subject, message, from_email, ['info@vikingassetmanagement.com'])
 		data['status'] = "success!"
 	except BadHeaderError:
 		data['status'] = "error!"
